@@ -14,7 +14,7 @@
     <h1>登录</h1>
     <form action="/checkUser" method="post">姓名：
       <input class="inputStyle" type="text" name="username" />
-      <div class="exchange">用户名错误</div>
+      <div class="exchange" style="display:none;">用户名错误</div>
       <br />密码：
       <input class="inputStyle" type="password" name="pwd" /><br />
       <input class="loginStyle" type="submit" value="登录" />
@@ -23,14 +23,29 @@
   <script>
     // 失去焦点事件
     document.querySelector(".inputStyle").onblur = function () {
+      if (document.querySelector(".inputStyle").value === '') {
+          document.querySelector(".exchange").style.display = 'none';
+          return;
+      }
       // 通过Ajax提交数据给后端并验证
       let xhr = new XMLHttpRequest(); 
       // this.value 获取输入框的内容  
       xhr.open("get", `/checkUserName?username=${this.value}`, true);
       //  xhr.send()发送后,要做"用户名正确与否"的结果返还
       xhr.onload = function () {
-        // 后端返还参数
+        // 接收参数
         console.log(xhr.responseText);
+        // 做参数验证
+        // Json转为对象数组
+        let obj = JSON.parse(xhr.responseText); 
+        document.querySelector(".exchange").innerHTML = obj.info;
+        document.querySelector(".exchange").style.display = 'block';
+
+        if (obj.status == 1) {
+          document.querySelector(".exchange").style.color = "green";
+        } else {
+          document.querySelector(".exchange").style.color = "red";
+        }
       }
       xhr.send();
     }

@@ -15,7 +15,21 @@ router.get("/checkUserName",(ctx,next)=>{
     // 接收get参数
     console.log(ctx.query);
     // 向Ajax返回参数
-    ctx.body = "hello";
+    // ctx.body = "hello";
+    // 注意：require会自动将json转为对象数组，无需使用JSON.parse方法
+    let res =  usersData.find(v => v.username === ctx.query.username);
+    if(res){
+        // 在node中会自动将以下对象转为json，由xhr.responseText接收到
+        ctx.body = {
+            status:1,
+            info:"用户名正确"
+        };
+    }else{
+        ctx.body = {
+            status:2,
+            info:"用户名错误"
+        };
+    }
 })
 app.use(router.routes());
 app.listen(3000);
