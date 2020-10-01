@@ -4,6 +4,10 @@ const Router = require("koa-router");
 let app = new Koa();
 app.use(static(__dirname+"/static"));
 let router = new Router();
+
+const usersData = require("./data/users.json");
+console.log(usersData);
+
 router.get("/",(ctx,next)=>{
     ctx.body = "hello";
 })
