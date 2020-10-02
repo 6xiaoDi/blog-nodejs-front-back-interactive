@@ -31,5 +31,12 @@ router.get("/checkUserName",(ctx,next)=>{
         };
     }
 })
+router.get("/get/:id",(ctx,next)=>{
+    console.log(ctx.params);
+    ctx.body = {
+        status:1,
+        info:"请求成功"
+    }
+})
 app.use(router.routes());
 app.listen(3000);
