@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+ 
+<body>
+    <button>点击我发送ajax</button>
+</body>
+<script>
+    document.querySelector("button").onclick = function () {
+        let xhr = new XMLHttpRequest();
+        xhr.open("post", "/post", true);
+        xhr.onload = function () {
+            console.log(xhr.responseText);
+        }
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        let data = "username=王五&age=20";
+        xhr.send(data);
+    }
+</script>
+</html>

@@ -1,8 +1,11 @@
 const Koa = require("koa");
 const static = require("koa-static");
 const Router = require("koa-router");
+const koaBody = require("koa-body");
 let app = new Koa();
 app.use(static(__dirname+"/static"));
+//  post使用
+app.use(koaBody());
 let router = new Router();
 
 const usersData = require("./data/users.json");
@@ -37,6 +40,9 @@ router.get("/get/:id",(ctx,next)=>{
         status:1,
         info:"请求成功"
     }
+})
+router.post("/post",(ctx,next)=>{
+    console.log(ctx.request.body);
 })
 app.use(router.routes());
 app.listen(3000);
