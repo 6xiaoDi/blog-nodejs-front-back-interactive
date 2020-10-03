@@ -2,6 +2,7 @@ const Koa = require("koa");
 const static = require("koa-static");
 const Router = require("koa-router");
 const koaBody = require("koa-body");
+const fs = require("fs");
 let app = new Koa();
 app.use(static(__dirname+"/static"));
 //  post使用
@@ -74,7 +75,10 @@ router.get("/xml",(ctx,next)=>{
 
 router.post("/upload",(ctx,next)=>{
     console.log(ctx.request.body);  // 参数传递
-    console.log(ctx.request.files); // 文件
+    console.log(ctx.request.files.img); // 对应form.append("img",file);
+    let fileData =  fs.readFileSync(ctx.request.files.img.path);
+    // 1、写入路径+文件名 2、读取的文件对象
+    fs.writeFileSync("static/imgs/"+ctx.request.files.img.name,fileData);
     ctx.body = "请求成功";
 })
 
