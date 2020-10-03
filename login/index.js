@@ -34,6 +34,7 @@ router.get("/checkUserName",(ctx,next)=>{
         };
     }
 })
+
 router.get("/get/:id",(ctx,next)=>{
     console.log(ctx.params);
     ctx.body = {
@@ -41,6 +42,7 @@ router.get("/get/:id",(ctx,next)=>{
         info:"请求成功"
     }
 })
+
 router.post("/post",(ctx,next)=>{
     console.log(ctx.request.body);
     ctx.body = {
@@ -48,5 +50,21 @@ router.post("/post",(ctx,next)=>{
         info:"post请求成功"
     }
 })
+
+router.get("/xml",(ctx,next)=>{
+    ctx.body = `<?xml version='1.0' encoding='utf-8' ?>
+                    <books>
+                        <nodejs>
+                            <name>nodejs实战</name>
+                            <price>56元</price>
+                        </nodejs>
+                        <react>
+                            <name>react入门</name>
+                            <price>50元</price>
+                        </react>
+                    </books>
+                `
+})
+
 app.use(router.routes());
 app.listen(3000);
