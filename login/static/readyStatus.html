@@ -15,12 +15,10 @@
     document.querySelector("button").onclick = function () {
         let xhr = new XMLHttpRequest();
         xhr.open("get", "/get/4", true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) { // 成功
-                if (xhr.status == 200) {
-                    console.log(xhr.responseText);
-                }
-            }
+        xhr.onload = function () {
+            console.log(xhr.responseText);
+            console.log(xhr.readyState);
+            console.log(xhr.status);
         }
         xhr.send();
     }
