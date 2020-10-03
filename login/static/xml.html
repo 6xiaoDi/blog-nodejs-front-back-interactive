@@ -13,10 +13,15 @@
         document.querySelector("button").onclick = function(){
             let xhr = new XMLHttpRequest();
             xhr.open("get","/xml",true);
+            // 重写content-type；
+            xhr.overrideMimeType("text/xml");
+
             xhr.onload = function(){
                 // console.log(xhr.responseText); // 文本类型
                 console.log(xhr.responseXML); // XML
                 // console.log(xhr.response); // 原始数据返还
+                let name =  xhr.responseXML.getElementsByTagName("name")[1].innerHTML;
+                console.log(name);
             }
             xhr.send();
         }
