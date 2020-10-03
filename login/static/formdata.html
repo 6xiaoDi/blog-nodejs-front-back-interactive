@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" class="myfile" />
+    <button>点击我上传文件</button>
+</body>
+<script>
+    document.querySelector("button").onclick = function(){
+        let files = document.querySelector(".myfile").files;
+        console.log(files);
+    }
+</script>
+</html>
