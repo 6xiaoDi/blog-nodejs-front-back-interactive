@@ -52,6 +52,7 @@ router.post("/post",(ctx,next)=>{
 })
 
 router.get("/xml",(ctx,next)=>{
+    ctx.set("content-type","text/xml");
     ctx.body = `<?xml version='1.0' encoding='utf-8' ?>
                     <books>
                         <nodejs>
