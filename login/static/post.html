@@ -9,6 +9,7 @@
 </head>
  
 <body>
+    <!-- <form action="" enctype="application/x-www-form-urlencoded"></form> -->
     <button>点击我发送ajax</button>
 </body>
 <script>
@@ -17,9 +18,19 @@
         xhr.open("post", "/post", true);
         xhr.onload = function () {
             console.log(xhr.responseText);
+            // 获取返还头信息
+            console.log(xhr.getAllResponseHeaders()); // 返回所有头信息
+            console.log(xhr.getResponseHeader("content-type")); // 返回指定某个头信息
         }
-        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        let data = "username=王五&age=20";
+        // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        // xhr.setRequestHeader("Content-Type","multipart/form-data"); //二进制编码
+        xhr.setRequestHeader("content-type","application/json"); //json
+        // let data = "username=王五&age=20";
+        // 将对象转为JSON字符串
+        let data = JSON.stringify({
+            username:"王五",
+            age:20
+        })
         xhr.send(data);
     }
 </script>

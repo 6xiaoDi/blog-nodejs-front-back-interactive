@@ -43,6 +43,10 @@ router.get("/get/:id",(ctx,next)=>{
 })
 router.post("/post",(ctx,next)=>{
     console.log(ctx.request.body);
+    ctx.body = {
+        status:1,
+        info:"post请求成功"
+    }
 })
 app.use(router.routes());
 app.listen(3000);
