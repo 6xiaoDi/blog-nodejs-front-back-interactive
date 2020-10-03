@@ -14,7 +14,7 @@
     let btns = document.querySelectorAll("button");
     btns[0].onclick = function () {
         let xhr = new XMLHttpRequest();
-        xhr.open("get", "/get/4", true);
+        xhr.open("get", "/get/4", false);
         xhr.onload = function () {
             console.log(xhr.responseText);
         }
