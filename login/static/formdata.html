@@ -12,8 +12,20 @@
 </body>
 <script>
     document.querySelector("button").onclick = function(){
-        let files = document.querySelector(".myfile").files;
-        console.log(files);
+        // 数组第一个就是文件对象
+        let file = document.querySelector(".myfile").files[0];
+        // console.log(files);
+        let form = new FormData();
+        // 可以添加文件或者数据到FormData对象
+        form.append("img",file);
+        form.append("name","张三");
+        let xhr = new XMLHttpRequest();
+        // 第二个参数为上传地址，并异步上传
+        xhr.open("post","/upload",true);
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+        }
+        xhr.send(form);
     }
 </script>
 </html>

@@ -6,6 +6,11 @@ let app = new Koa();
 app.use(static(__dirname+"/static"));
 //  post使用
 app.use(koaBody());
+
+app.use(koaBody({
+    multipart:true  // 允许接收文件
+}));
+
 let router = new Router();
 
 const usersData = require("./data/users.json");
@@ -65,6 +70,12 @@ router.get("/xml",(ctx,next)=>{
                         </react>
                     </books>
                 `
+})
+
+router.post("/upload",(ctx,next)=>{
+    console.log(ctx.request.body);  // 参数传递
+    console.log(ctx.request.files); // 文件
+    ctx.body = "请求成功";
 })
 
 app.use(router.routes());
