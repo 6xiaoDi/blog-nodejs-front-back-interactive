@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+ 
+<body>
+    <input type="file" class="myfile" />
+    进度：<progress value="0" max="100"></progress> <span class="percent">0%</span>
+    速度：<span class="speed">20b/s</span>
+    <button>点击上传</button>
+    <button>取消上传</button>
+</body>
+<script>
+    let xhr = new XMLHttpRequest();
+    let btns = document.querySelectorAll("button");
+    let stime;
+    let sloaded;
+    // 点击上传
+    btns[0].onclick = function () {
+        let file = document.querySelector(".myfile").files[0];
+        
+        let form = new FormData();
+        form.append("myfile", file);
+        
+        xhr.open("post", "/fileUpload", true);
+        
+        xhr.onload = function () {
+            console.log(xhr.responseText);
+        }
+        
+        // 上传事件钩子
+        xhr.upload.onloadstart = function(){
+            console.log("开始上传");
+        }
+        xhr.upload.onprogress = function(evt){
+            console.log("正在上传");
+        }
+        xhr.upload.onload = function(){
+            console.log("上传成功");
+        }
+        xhr.upload.onloadend = function(){
+            console.log("上传结束");
+        }
+        xhr.upload.onabort = function(){
+            console.log("取消上传");
+        }
+        
+        xhr.send(form);
+    }
+    
+    // 取消上传
+    btns[1].onclick = function(){
+        xhr.abort();
+    }
+</script>
+</html>
