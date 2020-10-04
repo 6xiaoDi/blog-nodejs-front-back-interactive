@@ -11,7 +11,7 @@
 <body>
     <input type="file" class="myfile" />
     进度：<progress value="0" max="100"></progress> <span class="percent">0%</span>
-    速度：<span class="speed">20b/s</span>
+    速度：<span class="speed">0b/s</span>
     <button>点击上传</button>
     <button>取消上传</button>
 </body>
@@ -36,8 +36,32 @@
         // 上传事件钩子
         xhr.upload.onloadstart = function(){
             console.log("开始上传");
+            sTime = new Date().getTime();
+            sLoaded = 0;
         }
         xhr.upload.onprogress = function(evt){
+            let endTime = new Date().getTime();
+            // 时间差
+            let dTime = (endTime - sTime) / 1000; // 单位: ms 转成 s
+            // 当前时间差内已经上传的文件大小
+            let dLoaded = evt.loaded - sLoaded;  
+            let speed = dLoaded / dTime;
+            let unit = "b/s"
+            
+            // 复位起始时间和文件大小
+            sTime = new Date().getTime();
+            sLoaded = evt.loaded;
+            
+            if (speed / 1024 > 1) {
+                unit = "kb/s";
+                speed = speed / 1024;
+            }
+            if (speed / 1024 > 1) {
+                unit = "mb/s";
+                speed = speed / 1024;
+            }
+            document.querySelector('.speed').innerHTML = speed.toFixed(2) + unit;
+
             // console.log("正在上传");
             // 当前文件上传的大小evt.loaded（evt回调返还）
             // 当前文件上传的大小 / 需要上传文件的大小  换成百分比  去掉小数点
