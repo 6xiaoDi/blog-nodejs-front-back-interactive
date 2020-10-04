@@ -18,8 +18,8 @@
 <script>
     let xhr = new XMLHttpRequest();
     let btns = document.querySelectorAll("button");
-    let stime;
-    let sloaded;
+    let stime;  // 开始时间
+    let sloaded; // 最开始上传文件的大小
     // 点击上传
     btns[0].onclick = function () {
         let file = document.querySelector(".myfile").files[0];
@@ -38,7 +38,13 @@
             console.log("开始上传");
         }
         xhr.upload.onprogress = function(evt){
+            xhr.upload.onprogress = function(evt){
             console.log("正在上传");
+            // 当前文件上传的大小evt.loaded（evt回调返还）
+            // 当前文件上传的大小 / 需要上传文件的大小(evt.total)  换成百分比  去掉小数点
+            let percent =  (evt.loaded/evt.total*100).toFixed(0);
+            console.log(percent);
+        }
         }
         xhr.upload.onload = function(){
             console.log("上传成功");
