@@ -13,7 +13,8 @@
 let btn = document.querySelector("button");
 btn.onclick = function(){
     let xhr = new XMLHttpRequest();
-    xhr.open("get","/getAjax",true);
+    // xhr.open("get","/getAjax",true);
+    xhr.open("get","http://localhost:4000/getAjax",true);
     xhr.onload = function(){
         console.log(xhr.responseText);
     }
