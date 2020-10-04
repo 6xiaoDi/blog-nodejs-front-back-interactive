@@ -11,13 +11,9 @@ router.get("/",(ctx,next)=>{
 
 router.get("/getAjax",(ctx,next)=>{
     console.log("4000 run ");
-    console.log(ctx.query.name);
-    // ctx.body = {
-    //     name:"李四4000",
-    //     age:20
-    // }
-    // 返还js语句给前端，前端即可自动执行
-    ctx.body = "var a = 20";
+    let cb = ctx.query.cb;
+    // 使回调函数发送到客户端html页面上执行
+    ctx.body = `${cb}(20)`;
 })
 
 app.use(router.routes());
