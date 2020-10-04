@@ -10,10 +10,13 @@ router.get("/",(ctx,next)=>{
 })
 
 router.get("/getAjax",(ctx,next)=>{
-    ctx.body = {
-        name:"李四4000",
-        age:20
-    }
+    console.log("4000 run ");
+    // ctx.body = {
+    //     name:"李四4000",
+    //     age:20
+    // }
+    // 返还js语句给前端，前端即可自动执行
+    ctx.body = "var a = 20";
 })
 
 app.use(router.routes());
