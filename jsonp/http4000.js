@@ -11,6 +11,7 @@ router.get("/",(ctx,next)=>{
 
 router.get("/getAjax",(ctx,next)=>{
     console.log("4000 run ");
+    console.log(ctx.query.name);
     // ctx.body = {
     //     name:"李四4000",
     //     age:20
