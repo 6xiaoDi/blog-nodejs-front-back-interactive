@@ -13,7 +13,12 @@ router.get("/getAjax",(ctx,next)=>{
     console.log("4000 run ");
     let cb = ctx.query.cb;
     // 使回调函数发送到客户端html页面上执行
-    ctx.body = `${cb}(20)`;
+    // ctx.body = `${cb}(20)`;
+    let obj = {
+        a:20,
+        b:20
+    };
+    ctx.body = `${cb}(${JSON.stringify(obj)})`;
 })
 
 app.use(router.routes());
