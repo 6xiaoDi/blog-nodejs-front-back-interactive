@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button>点击获取跨域资源</button>
+</body>
+<script>
+let btn = document.querySelector("button");
+btn.onclick = function(){
+    let o = document.createElement("script");
+    o.src = "http://localhost:4000/getAjax";
+    document.querySelector("head").appendChild(o);
+    console.log(a);
+}
+</script>
+</html>
