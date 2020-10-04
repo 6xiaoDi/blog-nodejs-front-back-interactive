@@ -15,7 +15,11 @@ btn.onclick = function(){
     let o = document.createElement("script");
     o.src = "http://localhost:4000/getAjax";
     document.querySelector("head").appendChild(o);
-    console.log(a);
+ 
+    // console.log(a);
+    o.onload = function(){
+        console.log(a);
+    }
 }
 </script>
 </html>
