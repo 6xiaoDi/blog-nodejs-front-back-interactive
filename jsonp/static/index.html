@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="css/index.css" />
+    <script src="jsonp.js"></script>
+    <link rel="stylesheet" href="/css/index.css" />
 </head>
  
 <body>
@@ -44,25 +45,33 @@
         </div>
         <div class="itemContainer">
             <!-- 商品呈现 -->
-            <div class="item">
-                <img
-                    src="https://s11.mogucdn.com/mlcdn/c45406/180830_0ggfhcfd757g3jg8k8fjaclc3h123_640x960.jpg_440x587.v1cAC.40.webp" />
-                <div class="bottom-describe">
-                    <p class="describe">
-                        海底捞火锅1盒懒人自煮自热方便速食牛油麻辣即食小火锅麻辣火锅
-                    </p>
-                    <div class="priceContainer">
-                        <b>¥26.8</b>
-                        <span class="oldPrice">￥53.6</span>
-                        <span class="mystar">
-                            <img src="https://s18.mogucdn.com/p2/160908/upload_27g4f1ch6akie83hacb676j622b9l_32x30.png"
-                                alt="" />
-                            2585
-                        </span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </body>
+<script>
+    getData();
+    function getData() {
+        ajax({
+            url: "https://list.mogu.com/search",
+            data:{
+                _version: 8193,
+                ratio: "3%3A4",
+                cKey: 15,
+                page: 1,
+                sort: "pop",
+                ad: 0,
+                fcid: 50240,
+                action: "clothing",
+                acm: "3.mce.1_10_1nxfm.128038.0.bbTeVrZw7LbTl.pos_0-m_558181-sd_119",
+                ptp: "31.v5mL0b.0.0.0eYRhbQT",
+                _:1589965170198
+            },
+            dataType: "jsonp",
+            jsonp: "callback",
+            success: function (res) {
+                console.log(res);
+            }
+        })
+    }
+</script>
 </html>
