@@ -49,7 +49,7 @@
     </div>
 </body>
 <script>
-    getData();
+       getData();
     function getData() {
         ajax({
             url: "https://list.mogu.com/search",
@@ -69,9 +69,40 @@
             dataType: "jsonp",
             jsonp: "callback",
             success: function (res) {
-                console.log(res);
+                // console.log(res);
+                // 返回成功
+                if (res.status.code == 1001) {
+                    let data = res.result.wall.docs;
+                    // console.log(data);
+                    data.forEach(item => {
+                        createEelement(item);
+                    })
+                }
             }
         })
+    }
+ 
+    function createEelement(item) {
+        console.log(item);
+        let mydiv = document.createElement("div");
+        mydiv.classList = "item";
+        mydiv.innerHTML = `<img
+                    src="${item.img}" />
+                    <div class="bottom-describe">
+                        <p class="describe">
+                            ${item.title}
+                        </p>
+                        <div class="priceContainer">
+                            <b>¥${item.price}</b>
+                            <span class="oldPrice">￥${item.orgPrice}</span>
+                            <span class="mystar">
+                                <img src="https://s18.mogucdn.com/p2/160908/upload_27g4f1ch6akie83hacb676j622b9l_32x30.png"
+                                    alt="" />
+                                ${item.cfav}
+                            </span>
+                        </div>
+                    </div>`;
+                document.querySelector(".itemContainer").appendChild(mydiv);
     }
 </script>
 </html>
