@@ -23,7 +23,14 @@ document.querySelector(".myinput").onblur = function(){
             wd:this.value
         },
         success:function(res){
-            console.log(res);
+            // console.log(res);
+            let data = res.s;
+            let html = "<ul>";
+            data.forEach(v=>{
+                html += "<li>"+v+"</li>";
+            })
+            html += "</ul>";
+            document.querySelector(".exchange").innerHTML = html;
         }
     })
 }
