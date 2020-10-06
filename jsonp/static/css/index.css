@@ -1,0 +1,186 @@
+a{
+    text-decoration:none
+}
+.wrap{
+    width: 960px;
+    margin: 0 auto;    
+}
+
+.headerContainer{
+    height: 100px;
+    /* background: gray; */
+    display: flex;
+    justify-content: center;
+}
+.headerContainer img{
+    width: 130px;
+    float: left;
+}
+.catalog{
+    height: 100px;
+    width: 50px;
+    display: block;
+    float: left;
+    line-height: 100px;
+    text-align: center;
+    margin-left: 30px;
+}
+.searchInput{
+    float: left;
+    width: 462px;
+    height: 48px;
+    line-height: 48px;
+    border: none;
+    font-size: 14px;
+    background: #f7f7f7;
+    color: #666;
+    padding: 0 15px;
+   
+}
+.searchContainer{
+    height: 100px;
+    width: 552px;
+    display: flex;
+    float: left;
+    align-items: center;
+    margin-left: 10px;
+}
+.btn{
+    float: right;
+    width: 58px;
+    height: 48px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    background-image: url(https://s10.mogucdn.com/mlcdn/c45406/181205_2llkjh1g0fe27h51ahh5k5f27gkk9_116x96.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.sub_title{
+    line-height: 32px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 8px;
+}
+.nav_box{
+    border: 1px solid #e5e5e5;
+    height: 24px;
+    padding: 7px 0;
+    line-height: 24px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.txt{
+    float: left;
+    width: 46px;
+    height: 22px;
+    line-height: 22px;
+    display: block;
+    border: 1px solid #dadada;
+    font-size: 12px; 
+    
+}
+.txt span{
+    float: left;
+    color: #999;
+}
+.divid{
+    float: left;
+    margin: 0 5px;
+    font-size: 12px;
+}
+.confirm_btn{
+    background: 0 0;
+    border: 1px solid #dadada;
+    color: #333;
+    width: 45px;
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    text-align: center;
+    margin-left: 10px;
+    font-size: 12px;
+}
+.nav_box{
+    padding-left: 15px;
+    margin-bottom: 30px;
+}
+
+
+/* 每个商品的样式 */
+.item{
+    width: 220px;
+    height: 374px;
+    border: 1px solid #f2f2f2;
+    position: relative;
+    margin: 0 13px 25px 0;
+    display: inline-block
+}
+.item img{
+    width: 220px;
+    height: 293px;
+}
+.bottom-describe{
+    padding: 0 8px;
+    color: #666;
+    font-size: 14px;
+}
+.priceContainer{
+    height: 25px;
+    line-height: 25px;
+    color: #333;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+.priceContainer img{
+    height: 15px;
+    width: 16px;
+    
+}
+.describe{
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
+    bottom: 20px;
+}
+.mystar{
+    float: right;
+    margin-right: 20px;
+    color:#999;
+    font-size: 12px;
+}
+.mystar img{
+    vertical-align: middle;
+}
+.oldPrice{
+    text-decoration: line-through;
+}
+.iconShow{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+    align-items: center;
+}
+.iconMessage{
+    width: 24px;
+    height: 24px;
+    display: block;
+    background-image: url(https://s10.mogucdn.com/mlcdn/c45406/181016_626h76eek6jgl5621492ck0438af3_48x44.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.iconCollect{
+    width: 24px;
+    height: 24px;
+    display: block;
+    background-image: url(https://s10.mogucdn.com/mlcdn/c45406/181016_1e18fbc53dab5f8f6c45h6e57954d_44x44.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+
