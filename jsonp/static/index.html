@@ -49,7 +49,8 @@
     </div>
 </body>
 <script>
-       getData();
+ let page = 1;
+    getData();
     function getData() {
         ajax({
             url: "https://list.mogu.com/search",
@@ -57,7 +58,7 @@
                 _version: 8193,
                 ratio: "3%3A4",
                 cKey: 15,
-                page: 1,
+                page: page,
                 sort: "pop",
                 ad: 0,
                 fcid: 50240,
@@ -70,8 +71,8 @@
             jsonp: "callback",
             success: function (res) {
                 // console.log(res);
-                // 返回成功
                 if (res.status.code == 1001) {
+                    page++;
                     let data = res.result.wall.docs;
                     // console.log(data);
                     data.forEach(item => {
@@ -83,7 +84,7 @@
     }
  
     function createEelement(item) {
-        console.log(item);
+        // console.log(item);
         let mydiv = document.createElement("div");
         mydiv.classList = "item";
         mydiv.innerHTML = `<img
@@ -103,6 +104,18 @@
                         </div>
                     </div>`;
                 document.querySelector(".itemContainer").appendChild(mydiv);
+    }
+    //下拉加载数据；
+    document.onscroll = function(){
+        let windowHeight = document.documentElement.clientHeight;  // 可视区高度
+        let contentHeight = document.documentElement.offsetHeight;  // 内容高度
+        let scrollHeight = contentHeight - windowHeight; // 滚动高度
+        let scrollTop = document.documentElement.scrollTop;  // 当前的滚动高度
+        // 当前滚动高度  >=  滚动高度，最好设置提前的滚动偏移量，体验效果更好
+        if(scrollTop>=(scrollHeight-10)){
+            getData();
+        }
+ 
     }
 </script>
 </html>
