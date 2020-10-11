@@ -94,7 +94,29 @@
 
     // 选中文件后会触发onchange事件
     document.querySelector(".imgFile").onchange = function(){
-        console.log(this.files);
+        // console.log(this.files);
+        document.querySelector(".showContainer").style.display = "none";
+        document.querySelector(".loadContainer").style.display = "block";
+        // 将选取的图片做视图呈现
+        [...this.files].forEach(item=>{
+            console.log(item);
+            // FileReader对象可将图片转换成base64格式的图片；
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(item);
+            fileReader.onload = function(){
+                let div = document.createElement("div");
+                div.classList.add("uploadPhotoItem");
+                div.innerHTML = `<span class="myProgress">
+                            <span class="plan"></span>
+                            30%
+                        </span>
+                        <img src="${fileReader.result}" />
+                        <span class="pictureName">
+                            ${item.name}
+                        </span>`;
+                document.querySelector(".wantUpload").appendChild(div);
+            }
+        })
     }
 </script>
 </html>
