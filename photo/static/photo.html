@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,38 +86,92 @@
 </div>
 </body>
 <script>
-    document.querySelector(".close").onclick = function(){
+    let uploadArr = []; // 所有需要上传的图片
+    document.querySelector(".close").onclick = function () {
         document.querySelector(".masking").style.display = "none";
     }
-    document.querySelector(".mybtn").onclick = function(){
+    document.querySelector(".mybtn").onclick = function () {
         document.querySelector(".masking").style.display = "block";
     }
 
-    // 选中文件后会触发onchange事件
-    document.querySelector(".imgFile").onchange = function(){
+    document.querySelector(".imgFile").onchange = function () {
         // console.log(this.files);
         document.querySelector(".showContainer").style.display = "none";
         document.querySelector(".loadContainer").style.display = "block";
-        // 将选取的图片做视图呈现
-        [...this.files].forEach(item=>{
-            console.log(item);
-            // FileReader对象可将图片转换成base64格式的图片；
+        [...this.files].forEach(item => {
+            // 图片转换成base64格式的图片；
+            let WillUploadObj = new WillUploadImg(item);
+            WillUploadObj.createEle();
+            uploadArr.push(WillUploadObj); // 存入需要上传的图片数组中
+        })
+    }
+
+    // 继续添加：
+    document.querySelector(".imgFile-add").onchange = function () {
+        [...this.files].forEach(item => {
+            // 图片转换成base64格式的图片；
+            let WillUploadObj = new WillUploadImg(item);
+            WillUploadObj.createEle();
+            uploadArr.push(WillUploadObj);  // 存入需要上传的图片数组中
+        })
+    }
+    // 开始上传按钮
+    document.querySelector(".uploadBtn").onclick = function () {
+        console.log(uploadArr);
+        for (let i = 0; i < uploadArr.length; i++) {
+            uploadArr[i].uploadImg();
+        }
+    }
+
+    // 待上传图片对象
+    class WillUploadImg {
+        constructor(file) {
+            this.file = file;
+            this.div = ""; // div进度条
+        }
+        // 添加图片节点
+        createEle() {
             let fileReader = new FileReader();
-            fileReader.readAsDataURL(item);
-            fileReader.onload = function(){
+            fileReader.readAsDataURL(this.file);
+            let _this = this; // 注意this指向改变的这个问题
+            fileReader.onload = function () {
                 let div = document.createElement("div");
                 div.classList.add("uploadPhotoItem");
                 div.innerHTML = `<span class="myProgress">
                             <span class="plan"></span>
-                            30%
+                            <span class="exchange">30% </span>
                         </span>
                         <img src="${fileReader.result}" />
                         <span class="pictureName">
-                            ${item.name}
+                            ${_this.file.name}
                         </span>`;
                 document.querySelector(".wantUpload").appendChild(div);
+                _this.div = div; // 绑定进度条，方便区分每个对象的进度条
             }
-        })
+        }
+        // 上传功能
+        uploadImg() {
+            let form = new FormData();
+            form.append("img", this.file);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("post", "/upload", true);
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+            }
+
+            // 监控上传进度
+            xhr.upload.onprogress = (evt) => {
+                console.log(evt.total, evt.loaded);
+                // 上传的进度；（已经上传 / 需要上传的总大小 再四舍五入取整）
+                let percent = Math.round(evt.loaded / evt.total * 100) + "%";
+                // 找到对应的进度条
+                this.div.querySelector(".myProgress").style.display = "block";
+                this.div.querySelector(".plan").style.width = percent; // 实时更新宽度
+                this.div.querySelector(".exchange").innerHTML = percent; // 实时更新文字
+            }
+            xhr.send(form);
+        }
     }
 </script>
 </html>
