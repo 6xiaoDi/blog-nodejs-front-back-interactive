@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+<!-- <form enctype="application/x-www-form-urlencoded"></form> -->
+</body>
+<script>
+    ajax({
+        url: "/test",
+        method: "post",
+        data: {
+            hello: "你好",
+            height: "178cm"
+        },
+        success(res) {
+            console.log(res)
+        }
+    })
+
+    function ajax(opts) {
+        let newOpts = Object.assign({
+            url: "",
+            method: "get",
+            data: "",
+            async:true,
+            headers:{
+                "content-type":"application/x-www-form-urlencoded"
+            },
+            success() { }
+        }, opts);
+        let xhr = new XMLHttpRequest();
+        //  get 是通过querystring方式传参数；
+        // post 是通过send（data）, data格式：name=zhangsan&age=20 （实际类似querystring方式）
+        // get url :/xml  data:{name:zhangsan,age:20}  --->   /xml?name=zhangsan&age=20&height=178 (url+data组装)      querystring 查询参数
+        if (newOpts.method.toLowerCase() === "get") { // 转小写
+            xhr.open(newOpts.method, newOpts.url + "?"+ o2u(newOpts.data), newOpts.async);
+        }else{
+            xhr.open(newOpts.method, newOpts.url, newOpts.async);
+        }
+        xhr.setRequestHeader("content-type",newOpts.headers['content-type']);
+
+        xhr.onload = function(){
+            // 调用成功之后的回调函数
+            // 这里暂时默认按照JSON数据格式
+            newOpts.success(JSON.parse(xhr.responseText));
+        }
+
+        let sendData = null
+        if(newOpts.method.toLowerCase()==="post"){
+            // name=zhangsan&age=20&height=178
+            sendData = o2u(newOpts.data);
+        }
+        // get的时候是将参数通过open带到url中，而post需要将参数放入send
+        xhr.send(sendData);
+        // let obj = {
+        //     name:"张三",
+        //     age:20
+        // }
+        // console.log(o2u(obj));
+
+        // 将对象转为url
+        function o2u(obj) {
+
+            let keys = Object.keys(obj);
+            let values = Object.values(obj);
+            // key 值  k 索引
+            return keys.map((key, index) => {
+                // key：["hello","height"] -->index: 0,1
+                console.log(index)
+                return key + "=" + values[index];
+            }).join("&");
+        }
+
+    }
+</script>
+</html>

@@ -29,5 +29,16 @@ router.get("/xml",ctx=>{
                     </books>
                 `
 })
+
+// all这种写法绝对静止，这里只是测试而用
+// ctx.body自动将对象转为Json
+router.all("/test",ctx=>{
+    console.log(ctx.request.body);
+    ctx.body = {
+        somevalue:"一些数据",
+        status:1
+    }
+})
+
 app.use(router.routes());
 app.listen(4000);
