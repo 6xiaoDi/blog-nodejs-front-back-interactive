@@ -94,38 +94,56 @@
         document.querySelector(".masking").style.display = "block";
     }
 
+    // 创建节点后依次执行创建节点，这样创建节点就可以按照顺序进行了，就解决了bug（哪个文件小就创建快，这样就打乱了用户选择的上传顺序）
+    async function queue(uploadArr) {
+        for (let item of uploadArr) {
+            await item.createEle();
+        }
+    }
+
+    //点击上传按钮添加待上传图片
     document.querySelector(".imgFile").onchange = function () {
         // console.log(this.files);
+        //隐藏上传组件
         document.querySelector(".showContainer").style.display = "none";
+        //显示待上传内容；
         document.querySelector(".loadContainer").style.display = "block";
         [...this.files].forEach(item => {
             // 图片转换成base64格式的图片；
             let WillUploadObj = new WillUploadImg(item);
-            WillUploadObj.createEle();
             uploadArr.push(WillUploadObj); // 存入需要上传的图片数组中
         })
+        queue(uploadArr);
     }
 
-    // 继续添加：
+    //点击添加继续上传按钮添加图片
     document.querySelector(".imgFile-add").onchange = function () {
+        let appendArr = [];
         [...this.files].forEach(item => {
             // 图片转换成base64格式的图片；
             let WillUploadObj = new WillUploadImg(item);
-            WillUploadObj.createEle();
             uploadArr.push(WillUploadObj);  // 存入需要上传的图片数组中
+            appendArr.push(WillUploadObj);
         })
+        queue(appendArr);
     }
-    // 开始上传按钮
+
+    // 点击上传按钮开始上传
     document.querySelector(".uploadBtn").onclick = function () {
         console.log(uploadArr);
         // for (let i = 0; i < uploadArr.length; i++) {
         //        uploadArr[i].uploadImg();
         // }
-        queue();
+        queue().then();
         async function queue() {
-            for (let i = 0; i < uploadArr.length; i++) {
+            let i;
+            for (i = 0; i < uploadArr.length; i++) {
                 // 等待上张图片上传完之后，才进行下一张图片上传
                 await uploadArr[i].uploadImg();
+                if ((i + 1) >= uploadArr.length) {
+                    document.querySelector(".masking").style.display = "none";
+                    getImageData();
+                }
             }
         }
     }
@@ -134,27 +152,32 @@
     class WillUploadImg {
         constructor(file) {
             this.file = file;
-            this.div = ""; // div进度条
+            this.ele = ""; // div进度条
         }
         // 添加图片节点
         createEle() {
-            let fileReader = new FileReader();
-            fileReader.readAsDataURL(this.file);
-            let _this = this; // 注意this指向改变的这个问题
-            fileReader.onload = function () {
-                let div = document.createElement("div");
-                div.classList.add("uploadPhotoItem");
-                div.innerHTML = `<span class="myProgress">
-                            <span class="plan"></span>
-                            <span class="exchange">30% </span>
-                        </span>
-                        <img src="${fileReader.result}" />
-                        <span class="pictureName">
-                            ${_this.file.name}
-                        </span>`;
-                document.querySelector(".wantUpload").appendChild(div);
-                _this.div = div; // 绑定进度条，方便区分每个对象的进度条
-            }
+            return new Promise((resolve, reject) => {
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(this.file);
+                let _this = this;
+                fileReader.onload = function () {
+                    let uploadPhotoItem = document.createElement("div");
+                    uploadPhotoItem.classList.add("uploadPhotoItem");
+                    uploadPhotoItem.innerHTML = `
+                                    <span class="myProgress">
+                                        <span class="plan"></span>
+                                        <span class="percentNumber">30%</span>
+                                    </span>
+                                    <img src="${this.result}" />
+                                    <span class="pictureName">
+                                        ${_this.file.name}
+                                    </span>
+                                     `;
+                    document.querySelector(".wantUpload").appendChild(uploadPhotoItem);
+                    _this.ele = uploadPhotoItem;// 绑定进度条，方便区分每个对象的进度条
+                    resolve();
+                }
+            })
         }
         // 上传功能
         uploadImg() {
@@ -172,15 +195,41 @@
                     // 上传的进度；（已经上传 / 需要上传的总大小 再四舍五入取整）
                     let percent = Math.round(evt.loaded / evt.total * 100) + "%";
                     // 找到对应的进度条
-                    this.div.querySelector(".myProgress").style.display = "block";
-                    this.div.querySelector(".plan").style.width = percent; // 实时更新宽度
-                    this.div.querySelector(".exchange").innerHTML = percent; // 实时更新文字
-                    if (evt.loaded === evt.total)
+                    this.ele.querySelector(".myProgress").style.display = "block";
+                    this.ele.querySelector(".plan").style.width = percent; // 实时更新宽度
+                    this.ele.querySelector(".percentNumber").innerHTML = percent; // 实时更新文字
+                    if (evt.loaded === evt.total) {
                         resolve(); // 标志该张图片上传成功，执行onload后，下一张再开始上传
+	                    // 去除上传图片的列表
+                        document.querySelector(".wantUpload").removeChild(this.ele);
+                    }
                 }
                 xhr.send(form);
             })
         }
     }
+
+    // 通过ajax获取对应图片的内容 ;更新视图
+    function getImageData() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("get", "/getImageData", true);
+        xhr.onload = function () {
+            let imgData = JSON.parse(xhr.responseText);
+            let htmlContent = "";
+            imgData.forEach(item => {
+                htmlContent += `<div class="photoItem">
+                                    <img src="${item.imgUrl}" />
+                                <span>
+                                    ${item.imgName}
+                                </span>
+                            </div>`
+            })
+            document.querySelector(".photoContainer").innerHTML = htmlContent;
+        }
+        xhr.send();
+    }
+    // 一开始就执行获取数据进行渲染
+    getImageData();
+
 </script>
 </html>
