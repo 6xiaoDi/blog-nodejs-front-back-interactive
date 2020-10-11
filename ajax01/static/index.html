@@ -18,8 +18,10 @@
         xhr.open("get","/xml",true);
         xhr.onload = function(){
             // console.log(xhr.response)
-            console.log(xhr.responseXML);
+            // console.log(xhr.responseXML);
+            console.log(xhr.readyState,xhr.status);
         }
+
         xhr.send();
     }
 </script>
