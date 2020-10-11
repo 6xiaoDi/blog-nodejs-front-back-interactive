@@ -12,5 +12,8 @@ app.use(koaBody({
 router.get("/",ctx=>{
     ctx.body = "some value..."
 })
+router.get("/xml",ctx=>{
+    ctx.body = "some xml value...";
+})
 app.use(router.routes());
 app.listen(4000);

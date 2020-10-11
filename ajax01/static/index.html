@@ -12,5 +12,14 @@
 <button class="btn1">点击我请求ajax</button>
 </body>
 <script>
+    let btn1 = document.querySelector(".btn1");
+    btn1.onclick = function(){
+        let xhr = new XMLHttpRequest();
+        xhr.open("get","/xml",true);
+        xhr.onload = function(){
+            console.log(xhr.response)
+        }
+        xhr.send();
+    }
 </script>
 </html>
