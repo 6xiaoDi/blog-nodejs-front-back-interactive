@@ -15,7 +15,7 @@ router.get("/",ctx=>{
 router.get("/xml",ctx=>{
     // ctx.body = "some xml value..."
     // 设置头部
-    // ctx.set("content-type","text/xml");
+    ctx.set("content-type","text/xml");
     ctx.body = `<?xml version='1.0' encoding='utf8' ?>
                     <books>
                         <nodejs>
