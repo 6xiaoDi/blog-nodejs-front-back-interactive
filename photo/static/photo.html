@@ -118,8 +118,15 @@
     // 开始上传按钮
     document.querySelector(".uploadBtn").onclick = function () {
         console.log(uploadArr);
-        for (let i = 0; i < uploadArr.length; i++) {
-            uploadArr[i].uploadImg();
+        // for (let i = 0; i < uploadArr.length; i++) {
+        //        uploadArr[i].uploadImg();
+        // }
+        queue();
+        async function queue() {
+            for (let i = 0; i < uploadArr.length; i++) {
+                // 等待上张图片上传完之后，才进行下一张图片上传
+                await uploadArr[i].uploadImg();
+            }
         }
     }
 
@@ -151,26 +158,28 @@
         }
         // 上传功能
         uploadImg() {
-            let form = new FormData();
-            form.append("img", this.file);
-
-            let xhr = new XMLHttpRequest();
-            xhr.open("post", "/upload", true);
-            xhr.onload = function () {
-                console.log(xhr.responseText);
-            }
-
-            // 监控上传进度
-            xhr.upload.onprogress = (evt) => {
-                console.log(evt.total, evt.loaded);
-                // 上传的进度；（已经上传 / 需要上传的总大小 再四舍五入取整）
-                let percent = Math.round(evt.loaded / evt.total * 100) + "%";
-                // 找到对应的进度条
-                this.div.querySelector(".myProgress").style.display = "block";
-                this.div.querySelector(".plan").style.width = percent; // 实时更新宽度
-                this.div.querySelector(".exchange").innerHTML = percent; // 实时更新文字
-            }
-            xhr.send(form);
+            return new Promise((resolve, reject) => {
+                let form = new FormData();
+                form.append("img", this.file);
+                let xhr = new XMLHttpRequest();
+                xhr.open("post", "/upload", true);
+                xhr.onload = function () {
+                    console.log(xhr.responseText);
+                }
+                // 监控上传进度
+                xhr.upload.onprogress = (evt) => {
+                    console.log(evt.total, evt.loaded);
+                    // 上传的进度；（已经上传 / 需要上传的总大小 再四舍五入取整）
+                    let percent = Math.round(evt.loaded / evt.total * 100) + "%";
+                    // 找到对应的进度条
+                    this.div.querySelector(".myProgress").style.display = "block";
+                    this.div.querySelector(".plan").style.width = percent; // 实时更新宽度
+                    this.div.querySelector(".exchange").innerHTML = percent; // 实时更新文字
+                    if (evt.loaded === evt.total)
+                        resolve(); // 标志该张图片上传成功，执行onload后，下一张再开始上传
+                }
+                xhr.send(form);
+            })
         }
     }
 </script>
