@@ -30,12 +30,14 @@
     }
     document.querySelector(".btn2").onclick = function () {
         let myHeaders = new Headers();
-        myHeaders.append( "content-type","application/x-www-form-urlencoded");
+        // myHeaders.append( "content-type","application/x-www-form-urlencoded");  //---->（querystring）body:"name=zhangsan&age=20"
+        myHeaders.append( "content-type","application/json");  //  --->（JSON）body:JSON.stringify({name:"张三",age:30})
         myHeaders.append( "x-custom","somevalue");
         // post提供配置参数对象
         fetch("/post",{
             method:"post",
-            body:"name=zhangsan&age=20", // querystring方式
+            // body:"name=zhangsan&age=20", // querystring方式
+            body:JSON.stringify({name:"张三",age:30}),
             // headers:{
             //     "content-type":"application/x-www-form-urlencoded", // 可追加更多的头
             //     "x-custom":"somevalue" // 可自定义
@@ -44,7 +46,8 @@
         }).then(res=>{
             // 返还的是response对象；
             // console.log(res);
-            return res.text();
+            // return res.text();
+            return res.json();
         }).then(res=>{
             console.log(res);
         }).catch(err=>{
