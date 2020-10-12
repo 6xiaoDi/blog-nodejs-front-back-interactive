@@ -14,6 +14,8 @@ router.options("/:splat*",ctx=>{
     // 允许前端获取的头部
     // 如果是多个可在第二个参数中用逗号隔开
     ctx.set("Access-Control-Expose-Headers","Date,Access-Control-Allow-Headers")
+    //允许前端请求的方法 ；
+    ctx.set("Access-Control-Allow-Methods",'PUT, POST, GET, DELETE, OPTIONS');
     ctx.body = "";
 })
 
@@ -32,6 +34,8 @@ router.post("/getData",ctx=>{
     // 允许前端获取的头部
     // 如果是多个可在第二个参数中用逗号隔开
     ctx.set("Access-Control-Expose-Headers","Date,Access-Control-Allow-Headers")
+    //允许前端请求的方法 ；
+    ctx.set("Access-Control-Allow-Methods",'PUT, POST, GET, DELETE, OPTIONS');
     ctx.body = {
         info:"I am at 4000"
     };
