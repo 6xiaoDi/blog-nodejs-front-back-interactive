@@ -47,7 +47,8 @@
             // 返还的是response对象；
             // console.log(res);
             // return res.text();
-            return res.json();
+            // return res.json(); //Json对象，但有可能涉及传址问题，后续要是修改就容易出问题，建议深拷贝
+            return res.clone(); // 深拷贝，不会影响原对象
         }).then(res=>{
             console.log(res);
         }).catch(err=>{
