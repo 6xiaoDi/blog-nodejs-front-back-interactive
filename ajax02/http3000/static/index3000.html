@@ -23,7 +23,9 @@
             console.log(xhr.responseText);
             // 获取返还头部；（以下两种方式）
             // 获取某个头
-            console.log(xhr.getResponseHeader("Content-Length"));
+            // console.log(xhr.getResponseHeader("Content-Length"));
+            // 获取所有头
+            console.log(xhr.getAllResponseHeaders());
         }
         xhr.send();
     }
