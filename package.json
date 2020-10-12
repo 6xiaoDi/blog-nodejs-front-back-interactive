@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/6xiaoDi/blog-nodejs-front-back-interactive#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "koa": "^2.13.0",
     "koa-body": "^4.2.0",
     "koa-router": "^9.4.0",

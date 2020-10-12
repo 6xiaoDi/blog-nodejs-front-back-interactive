@@ -9,5 +9,11 @@ router.get("/",ctx=>{
     ctx.body = "some value... at 4000";
 });
 
+router.post("/getDataService",ctx=>{
+    ctx.body = {
+        info:"4000端口数据"
+    }
+})
+
 app.use(router.routes());
 app.listen(4000);

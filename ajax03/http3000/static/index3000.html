@@ -7,12 +7,16 @@
 	<title>Document</title>
 </head>
 <body>
-<button class="btn">点击发送请求到4000</button>
+<button class="btn1">服务端代理请求</button>
 </body>
 <script>
-    document.querySelector(".btn").onclick = function(){
+    //服务端代理
+    document.querySelector(".btn1").onclick = function(){
         let xhr = new XMLHttpRequest();
+        // 请求自己端口的服务端接口，做转发到别的服务器再请求
+        xhr.open("post","/getData",true);
         xhr.onload = function(){
+            // 获取返还头部；
             console.log(xhr.responseText);
         }
         xhr.send();
