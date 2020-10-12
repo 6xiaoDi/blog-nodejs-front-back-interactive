@@ -8,6 +8,9 @@ app.use(static(__dirname+"/static"));
 router.options("/:splat*",ctx=>{
     // 允许cors跨域；
     ctx.set("Access-Control-Allow-Origin","http://localhost:3000")
+    // 允许设置的头部信息；
+    // 注意与正式请求一致
+    ctx.set("Access-Control-Allow-Headers","Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild")
     ctx.body = "";
 })
 
@@ -20,6 +23,9 @@ router.post("/getData",ctx=>{
     // 允许跨域；允许地址
     // ctx.set("Access-Control-Allow-Origin","*")
     ctx.set("Access-Control-Allow-Origin","http://localhost:3000")
+    // 允许设置的头部信息；（如果允许还有多个的话，可继往后追加），除此之外的头部信息，是不允许的，前端需提前与后端商量
+    // 注意预检请求也得同步设置
+    ctx.set("Access-Control-Allow-Headers","Content-type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild")
     ctx.body = {
         info:"I am at 4000"
     };
