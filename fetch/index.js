@@ -25,5 +25,12 @@ router.post("/post",ctx=>{
     };
 })
 
+router.get("/test/:id",ctx=>{
+    let res =   ctx.params.id  // param形式
+//    ctx.request.query  querystring :查询参数；name=zhangsan&age=20
+    console.log(res);
+    ctx.body = "some value....";
+})
+
 app.use(router.routes());
 app.listen(4000);
