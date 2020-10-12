@@ -16,6 +16,8 @@ router.options("/:splat*",ctx=>{
     ctx.set("Access-Control-Expose-Headers","Date,Access-Control-Allow-Headers")
     //允许前端请求的方法 ；
     ctx.set("Access-Control-Allow-Methods",'PUT, POST, GET, DELETE, OPTIONS');
+    // 允许携带凭证；cookie  --》允许跨域的地址需要指定 ："http://localhost:3000"
+    ctx.set("Access-Control-Allow-Credentials",true);
     ctx.body = "";
 })
 
@@ -36,6 +38,8 @@ router.post("/getData",ctx=>{
     ctx.set("Access-Control-Expose-Headers","Date,Access-Control-Allow-Headers")
     //允许前端请求的方法 ；
     ctx.set("Access-Control-Allow-Methods",'PUT, POST, GET, DELETE, OPTIONS');
+    // 允许携带凭证；cookie  --》允许跨域的地址需要指定 ："http://localhost:3000"
+    ctx.set("Access-Control-Allow-Credentials",true);
     ctx.body = {
         info:"I am at 4000"
     };
