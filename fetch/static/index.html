@@ -34,7 +34,8 @@
             method:"post",
             body:"name=zhangsan&age=20", // querystring方式
             headers:{
-                "content-type":"application/x-www-form-urlencoded",
+                "content-type":"application/x-www-form-urlencoded", // 可追加更多的头
+                "x-custom":"somevalue" // 可自定义
             }
         }).then(res=>{
             // 返还的是response对象；
