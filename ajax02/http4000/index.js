@@ -9,6 +9,8 @@ router.get("/",ctx=>{
 });
 router.post("/getData",ctx=>{
     console.log("请求过来了");
+    // 允许跨域；允许地址
+    ctx.set("Access-Control-Allow-Origin","*")
     ctx.body = {
         info:"I am at 4000"
     };
