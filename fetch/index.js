@@ -12,6 +12,8 @@ router.get("/", ctx=>{
 
 router.get("/get",ctx=>{
     console.log("get请求过来");
+    let res = ctx.request.query;  // querystring形式
+    console.log(res);
     ctx.body = {
         info:"get返还数据"
     }

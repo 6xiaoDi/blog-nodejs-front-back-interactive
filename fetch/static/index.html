@@ -15,7 +15,7 @@
 </body>
 <script>
     document.querySelector(".btn1").onclick = function () {
-        fetch("/get").then(res=>{
+        fetch("/get?name=zhangsan").then(res=>{
             // 返还的是response对象；
             console.log(res);
             // 直接拿response是看不到结果的，得取它的text()才行，下一个then里获取
