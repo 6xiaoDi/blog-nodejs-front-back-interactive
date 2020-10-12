@@ -14,7 +14,8 @@
     document.querySelector(".btn1").onclick = function(){
         let xhr = new XMLHttpRequest();
         // 请求自己端口的服务端接口，做转发到别的服务器再请求
-        xhr.open("post","/getData",true);
+        // xhr.open("post","/getData",true);
+        xhr.open("post","/api/getDataService",true)
         xhr.onload = function(){
             // 获取返还头部；
             console.log(xhr.responseText);
