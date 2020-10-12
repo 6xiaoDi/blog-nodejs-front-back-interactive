@@ -13,6 +13,7 @@
     document.querySelector(".btn").onclick = function(){
         let xhr = new XMLHttpRequest();
         xhr.open("get","/test",true);
+        xhr.open("post","http://localhost:4000/getData",true);
         xhr.onload = function(){
             console.log(xhr.responseText);
         }
