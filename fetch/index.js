@@ -10,5 +10,18 @@ router.get("/", ctx=>{
     ctx.body = "some value......";
 })
 
+router.get("/get",ctx=>{
+    console.log("get请求过来");
+    ctx.body = {
+        info:"get返还数据"
+    }
+})
+router.post("/post",ctx=>{
+    console.log(ctx.request.body);
+    ctx.body = {
+        info:"post返还数据"
+    };
+})
+
 app.use(router.routes());
 app.listen(4000);
