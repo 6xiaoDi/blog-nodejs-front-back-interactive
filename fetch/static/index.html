@@ -29,14 +29,18 @@
         })
     }
     document.querySelector(".btn2").onclick = function () {
+        let myHeaders = new Headers();
+        myHeaders.append( "content-type","application/x-www-form-urlencoded");
+        myHeaders.append( "x-custom","somevalue");
         // post提供配置参数对象
         fetch("/post",{
             method:"post",
             body:"name=zhangsan&age=20", // querystring方式
-            headers:{
-                "content-type":"application/x-www-form-urlencoded", // 可追加更多的头
-                "x-custom":"somevalue" // 可自定义
-            }
+            // headers:{
+            //     "content-type":"application/x-www-form-urlencoded", // 可追加更多的头
+            //     "x-custom":"somevalue" // 可自定义
+            // }
+            headers:myHeaders
         }).then(res=>{
             // 返还的是response对象；
             // console.log(res);
