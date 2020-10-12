@@ -40,6 +40,6 @@ router.post("/getData",ctx=>{
         info:"I am at 4000"
     };
 });
-app.use(router.allowedMethods());
+
 app.use(router.routes());
 app.listen(4000);

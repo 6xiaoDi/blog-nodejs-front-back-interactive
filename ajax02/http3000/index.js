@@ -7,7 +7,11 @@ app.use(static(__dirname + "/static"));
 router.get("/", ctx => {
     ctx.body = "some value... at 3000";
 });
-router.get("/test", ctx => {
+router.post("/test", ctx => {
+    // 设置cookie；
+    ctx.cookies.set("name", "zhangsan", {
+        maxAge: 3600 * 1000   //毫秒（过期时间：1个小时）
+    })
     ctx.body = {
         name: "张三"
     }
