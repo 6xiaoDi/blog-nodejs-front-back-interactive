@@ -29,6 +29,22 @@
         })
     }
     document.querySelector(".btn2").onclick = function () {
+        // post提供配置参数对象
+        fetch("/post",{
+            method:"post",
+            body:"name=zhangsan&age=20", // querystring方式
+            headers:{
+                "content-type":"application/x-www-form-urlencoded",
+            }
+        }).then(res=>{
+            // 返还的是response对象；
+            // console.log(res);
+            return res.text();
+        }).then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 </script>
 </html>
