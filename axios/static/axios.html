@@ -12,6 +12,23 @@
 <button class="btn2">发送post请求</button>
 </body>
 <script>
+    // 拦截器：可以拦截所有请求（请求之前执行） 或者返还（返还之后执行）；
+    axios.interceptors.request.use((config)=>{  // 成功回调，config参数理解为res结果即可
+        // 拦截器就相当于：鉴权（判断有无权限请求接口）； ---》 （config中有header）头部加上鉴权信息带给后端做验证；
+        // 凭证验证正确后端才发送请求，否则就就不再请求，做页面跳转或者一些权限操作了。
+        console.log("所有请求之前执行1111");
+        return config;
+    },err=>{ // 失败回调
+        console.log(err);
+    })
+    // 返还拦截
+    axios.interceptors.response.use((res)=>{
+        console.log("所有所有返还之后执行111");
+        return res;
+    },err=>{
+        console.log(err);
+    })
+
     document.querySelector(".btn1").onclick = function(){
         // 函数式调用（两种使用方式）
         // axios({
@@ -38,10 +55,10 @@
             // },
             // data:params,
             data:JSON.stringify({name:"张三",age:21}),
-            // headers:{
+            headers:{
                 // "content-type":"application/x-www-form-urlencoded"
-            //     "content-type":"application/json"
-            // }
+                "content-type":"application/json"
+            }
         }).then(res=>{
             console.log(res.data);
         })
