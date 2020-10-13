@@ -26,6 +26,19 @@
         })
     }
     document.querySelector(".btn2").onclick = function(){
+        axios({
+            method:"post",
+            url:"/axiosPost",
+            data:{
+                name:"张三",
+                age:20
+            },
+            headers:{
+                "content-type":"application/x-www-form-urlencoded"
+            }
+        }).then(res=>{
+            console.log(res.data);
+        })
     }
 </script>
 </html>

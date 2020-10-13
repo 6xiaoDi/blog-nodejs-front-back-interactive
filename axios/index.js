@@ -16,5 +16,13 @@ router.get("/axios",ctx=>{
         info:"get返还数据"
     }
 })
+
+router.post("/axiosPost",ctx=>{
+    console.log("axios post请求过来",ctx.request.body);
+    ctx.body = {
+        info:"post返还数据"
+    }
+})
+
 app.use(router.routes());
 app.listen(4000);
