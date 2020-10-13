@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="axios.js" type="text/javascript"></script>
+</head>
+<body>
+<button class="btn1">发送get请求</button>
+<button class="btn2">发送post请求</button>
+</body>
+<script>
+    document.querySelector(".btn1").onclick = function(){
+        // 函数式调用（两种使用方式）
+        axios({
+            method:"get",
+            url:"/axios"
+        }).then(res=>{
+            console.log(res);
+        })
+    }
+    document.querySelector(".btn2").onclick = function(){
+    }
+</script>
+</html>
