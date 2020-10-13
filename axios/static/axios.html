@@ -21,6 +21,13 @@
     },err=>{ // 失败回调
         console.log(err);
     })
+    axios.interceptors.request.use((config)=>{
+        // 鉴权；  ---》 头部加上鉴权信息带给后端做验证；
+        console.log("所有请求之前执行2222");
+        return config;
+    },err=>{
+        console.log(err);
+    })
     // 返还拦截
     axios.interceptors.response.use((res)=>{
         console.log("所有所有返还之后执行111");
@@ -28,7 +35,12 @@
     },err=>{
         console.log(err);
     })
-
+    axios.interceptors.response.use((res)=>{
+        console.log("所有所有返还之后执行2222");
+        return res;
+    },err=>{
+        console.log(err);
+    })
     document.querySelector(".btn1").onclick = function(){
         // 函数式调用（两种使用方式）
         // axios({
