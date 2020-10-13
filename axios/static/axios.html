@@ -14,11 +14,15 @@
 <script>
     document.querySelector(".btn1").onclick = function(){
         // 函数式调用（两种使用方式）
-        axios({
-            method:"get",
-            url:"/axios"
-        }).then(res=>{
-            console.log(res.data)
+        // axios({
+        //     method:"get",
+        //     url:"/axios"
+        // }).then(res=>{
+        //     console.log(res.data)
+        // })
+        // get调用
+        axios.get("/axios").then(res=>{
+            console.log(res.data);
         })
     }
     document.querySelector(".btn2").onclick = function(){
