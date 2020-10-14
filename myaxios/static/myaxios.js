@@ -27,7 +27,7 @@ class Axios{
     }
     request(config){
         // 组装队列
-        let chain = [this.dispatchXhr,undefined];  // 网络请求放中间
+        let chain = [this.dispatchXhr.bind(this),undefined];   // 网络请求放中间
         // 发现越往后发的request请求拦截器，最新打印
         this.interceptors.request.handles.forEach(interceptor=>{
             // 在队列之前添加
