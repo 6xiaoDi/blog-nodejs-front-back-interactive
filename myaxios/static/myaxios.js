@@ -63,6 +63,62 @@ class Axios{
 // 适配器：adapter  适配node端和js端；
 class Adapter{
     http(config){
+        // 在nodejs端发送请求的；（服务端代理）
+        // 代理转发（相当于客户端模拟服务端）
+        return new Promise((resolve, reject) => {
+            const http = require("http");
+            // const https = require("https")
+
+            // url也是原生模块，如它可以把http://localhost:4000/axios这样地址（协议、域名、路由、端口等）拆分到一个对象中去
+            const urls = require("url");
+            let { data = null, url, method = 'get', params, headers = {} } = config;
+
+            let pathObj = urls.parse(url)
+
+            // http.request的配置项
+            let options = {
+                host: pathObj.hostname, // 服务端
+                port: pathObj.port, // 端口号
+                path: pathObj.path, // 路径
+                method: config.method.toUpperCase(), // 方法
+                headers: headers // 头部
+            };
+
+            // 配置项参考配置如下注释
+            // let options = {
+            //     host:'localhost',
+            //     port:3000,
+            //     path:'/atest',
+            //     method:'POST',
+            //     headers:{
+            //         "content-type":"application/json"
+            //     }
+            // }
+
+            // http.request方法就是原生js发送服务端代理，即代理请求，它可以请求其他服务器（如node、java等的服务器也可）
+            let request = http.request(options, res => {
+                let reslut = "";
+
+                // 结果通过“流”获取，不停地监听“data”事件，拿到的数据都放在data事件中,chunk就相当于每一个小方块，每一次流量
+                res.on("data", chunk => {
+                    reslut += chunk;
+                })
+
+                // 最终在"end"事件中拿到结果
+                // 原生post接收数据也是同样的"流"的思想,但是如对拿到的post数据之后,还需要进行处理,buff转换成字符串,再转换为对象,比较麻烦!
+                res.on("end", () => {
+                    // 发送完结果在这里拿到，如果有想发送的可通过req.write
+                    console.log(reslut.toString())
+                    resolve(JSON.parse(reslut.toString()));
+                })
+            })
+            // 发生错误就进入这里了
+            request.on("error", err => {
+                reject(err);
+            })
+            // 请求完毕需要end()
+            request.end();
+        })
         console.log("node端执行了",config);
     }
     xhr(config){

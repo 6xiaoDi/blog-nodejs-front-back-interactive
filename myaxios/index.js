@@ -16,5 +16,12 @@ router.get("/myaxios",ctx=>{
     }
 })
 
+router.get("/axios",ctx=>{
+    console.log("axios get请求过来");
+    ctx.body = {
+        info:"get返还数据"
+    }
+})
+
 app.use(router.routes());
 app.listen(4000);
