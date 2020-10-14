@@ -2,7 +2,10 @@ class Axios{
     constructor(){
     }
     request(config){
-        console.log("发送请求",config)
+        return new Promise(resolve=>{
+            console.log("发送请求",config);
+            resolve("发送请求");
+        })
     }
 }
 
