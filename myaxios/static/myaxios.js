@@ -9,6 +9,15 @@ class Axios{
     }
 }
 
+let methodsArr = ['get',"post","put","delete","options","head"];
+methodsArr.forEach(method=>{
+    Axios.prototype[method] = function(config){
+        config.method = method;
+        return this.request(config);
+    }
+})
+console.dir(Axios);
+
 // 创建实例
 function createInstance(){
     let context = new Axios();
