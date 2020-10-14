@@ -23,10 +23,11 @@ class Axios{
             request:new InterceptorManager(),
             response:new InterceptorManager()
         }
+        this.adapter = new Adapter();
     }
     request(config){
         // 组装队列
-        let chain = [this.xhr, undefined];  // 网络请求放中间
+        let chain = [this.dispatchXhr,undefined];  // 网络请求放中间
         // 发现越往后发的request请求拦截器，最新打印
         this.interceptors.request.handles.forEach(interceptor=>{
             // 在队列之前添加
@@ -45,7 +46,27 @@ class Axios{
         }
         return primose;
     }
+    // 触发网络请求
+    dispatchXhr(config){
+        // 判断环境？特殊的变量；
+        // 如客户端：我们可以在浏览器的控制台用window，我们再nodejs的控制台环境中打，是没有window这个属性的，而有process
+        if(typeof process !=='undefined'){
+            // 服务端（node端）
+            return this.adapter.http(config);
+        }else{
+            // 客户端
+            return  this.adapter.xhr(config);
+        }
+    }
+}
+
+// 适配器：adapter  适配node端和js端；
+class Adapter{
+    http(config){
+        console.log("node端执行了",config);
+    }
     xhr(config){
+        // 客户端请求；
         return new Promise(resolve=>{
             let xhr = new XMLHttpRequest();
             // 解构config
@@ -93,3 +114,8 @@ function createInstance(){
     return instance
 }
 let axios = createInstance();
+// 在html中引入是可以直接拿到axios变量的，但是在js中，作为node端使用的话，它是通过commonJs做的模块化，它是拿不到axios变量的。这里只能将axios变量导出出去！
+if(typeof process !=='undefined'){
+    // 服务端
+    module.exports = axios;
+}
