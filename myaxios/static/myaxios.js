@@ -38,7 +38,6 @@ function createInstance(){
     let instance = context.request;
     // 把原型里的方法混入到instance里；
     utils.extends(instance,Axios.prototype);
-    console.dir(instance);
     return instance
 }
 let axios = createInstance();
