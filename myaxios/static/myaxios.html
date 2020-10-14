@@ -11,6 +11,27 @@
 <h1>axios</h1>
 </body>
 <script>
+    axios.interceptors.request.use((config)=>{
+        // 鉴权；  ---》 头部加上鉴权信息带给后端做验证；
+        console.log("所有请求之前执行1111");
+        return config;
+    },err=>{
+        console.log(err);
+    })
+    axios.interceptors.request.use((config)=>{
+        // 鉴权；  ---》 头部加上鉴权信息带给后端做验证；
+        console.log("所有请求之前执行222");
+        return config;
+    },err=>{
+        console.log(err);
+    })
+    axios.interceptors.response.use((res)=>{
+        // 鉴权；  ---》 头部加上鉴权信息带给后端做验证；
+        console.log("所有请求之后执行3333");
+        return res;
+    },err=>{
+        console.log(err);
+    })
     axios.get({
         method:"get",
         url:"/myaxios"

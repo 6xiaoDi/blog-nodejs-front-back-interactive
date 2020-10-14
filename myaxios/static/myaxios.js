@@ -19,19 +19,52 @@ let utils = {
 class Axios{
     constructor(){
         this.test = "一些属性";
+        this.interceptors = {
+            request:new InterceptorManager(),
+            response:new InterceptorManager()
+        }
     }
     request(config){
+        // 组装队列
+        let chain = [this.xhr, undefined];  // 网络请求放中间
+        // 发现越往后发的request请求拦截器，最新打印
+        this.interceptors.request.handles.forEach(interceptor=>{
+            // 在队列之前添加
+            chain.unshift(interceptor.fulfilled,interceptor.rejected);
+        })
+
+        this.interceptors.response.handles.forEach(interceptor=>{
+            // 在队列尾部添加
+            chain.push(interceptor.fulfilled,interceptor.rejected);
+        })
+        console.log(chain);
+    }
+    xhr(config){
         return new Promise(resolve=>{
             let xhr = new XMLHttpRequest();
             // 解构config
             let {url="",data=null,method='get',headers={}} = config;
             xhr.open(method,url,true);
             xhr.onload = function(){
-                // 对返还做包装（config和xhr都在其内等），我们这里就不包装了
+                // 对返还做包装，我们这里就不包装了
                 resolve(xhr.responseText);
             }
             xhr.send(data);
         })
+    }
+}
+
+// 拦截器搜集器
+class InterceptorManager{
+    constructor(){
+        this.handles = []; // 队列
+    }
+    // fulfilled 成功 rejected 失败
+    use(fulfilled,rejected){
+        this.handles.push({
+            fulfilled,
+            rejected
+        });
     }
 }
 
@@ -46,7 +79,7 @@ methodsArr.forEach(method=>{
 // 创建实例
 function createInstance(){
     let context = new Axios();
-    let instance = context.request;
+    let instance = context.request.bind(context);
     // 把原型里的方法混入到instance里；
     utils.extends(instance,Axios.prototype,context);
     utils.extends(instance,context); // 将构造函数的属性混入进去
