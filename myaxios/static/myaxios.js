@@ -41,7 +41,7 @@ class Axios{
         let primose = Promise.resolve(config);
         while(chain.length>0){
             // 一次执行两个，再删除，then再反复执行！
-            primose.then(chain.shift(),chain.shift());
+            primose = primose.then(chain.shift(),chain.shift());
         }
         return primose;
     }
