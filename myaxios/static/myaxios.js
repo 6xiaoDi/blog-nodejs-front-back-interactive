@@ -1,8 +1,8 @@
 class Axios{
     constructor(){
     }
-    request(){
-        console.log("发送请求")
+    request(config){
+        console.log("发送请求",config)
     }
 }
 

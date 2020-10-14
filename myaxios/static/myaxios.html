@@ -11,6 +11,11 @@
 <h1>axios</h1>
 </body>
 <script>
-    axios();
+    axios({
+        method:"get",
+        url:"/test",
+    }).then(res=>{
+        console.log(res);
+    })
 </script>
 </html>
