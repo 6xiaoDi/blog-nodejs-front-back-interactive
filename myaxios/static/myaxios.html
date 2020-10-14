@@ -32,11 +32,11 @@
     },err=>{
         console.log(err);
     })
-    axios.get({
+    axios({
         method:"get",
         url:"/myaxios"
     }).then(res=>{
-        console.log(res);
+        console.log("??",res);
     });
 </script>
 </html>

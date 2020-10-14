@@ -37,7 +37,13 @@ class Axios{
             // 在队列尾部添加
             chain.push(interceptor.fulfilled,interceptor.rejected);
         })
-        console.log(chain);
+        // 异步执行队列
+        let primose = Promise.resolve(config);
+        while(chain.length>0){
+            // 一次执行两个，再删除，then再反复执行！
+            primose.then(chain.shift(),chain.shift());
+        }
+        return primose;
     }
     xhr(config){
         return new Promise(resolve=>{
