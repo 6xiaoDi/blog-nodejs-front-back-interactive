@@ -10,5 +10,11 @@ router.get("/", ctx=>{
     ctx.body = "some value......";
 })
 
+router.get("/myaxios",ctx=>{
+    ctx.body = {
+        info:"myaxios get返还数据"
+    }
+})
+
 app.use(router.routes());
 app.listen(4000);

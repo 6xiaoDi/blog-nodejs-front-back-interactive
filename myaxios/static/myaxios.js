@@ -22,8 +22,15 @@ class Axios{
     }
     request(config){
         return new Promise(resolve=>{
-            console.log("发送请求",config);
-            resolve("发送请求");
+            let xhr = new XMLHttpRequest();
+            // 解构config
+            let {url="",data=null,method='get',headers={}} = config;
+            xhr.open(method,url,true);
+            xhr.onload = function(){
+                // 对返还做包装（config和xhr都在其内等），我们这里就不包装了
+                resolve(xhr.responseText);
+            }
+            xhr.send(data);
         })
     }
 }
